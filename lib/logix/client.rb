@@ -3,7 +3,7 @@ module Logix
   class Client
 
     attr_accessor :password, :certificate, :private_key, :endpoint,
-                  :soft_cert_authentication_endpoint
+                  :soft_cert_authentication_endpoint, :soft_cert_activation_endpoint
 
     attr_writer :user_agent
 
@@ -16,8 +16,8 @@ module Logix
     #           :endpoint - The FQDN of the banking API
     #           Optional:
     #           :soft_cert_authentication_endpoint - Default: '/softCertLogin'
-    #
-    #
+    #           :soft_cert_activation_endpoint - Default: '/softCertActivation'
+    #           :user_agent - Overwrite the default user agent
     #
     # Returns a Logix::Client object
     def initialize(options = {})
@@ -44,6 +44,10 @@ module Logix
 
     def soft_cert_authentication_endpoint
       @soft_cert_authentication_endpoint ||= '/softCertLogin'
+    end
+
+    def soft_cert_activation_endpoint
+      @soft_cert_activation_endpoint ||= '/softCertActivation'
     end
 
   end

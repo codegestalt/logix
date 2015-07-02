@@ -50,4 +50,15 @@ describe Logix::Client do
     end
   end
 
+  describe '#soft_cert_activation_endpoint' do
+    it 'defaults the :soft_cert_activation_endpoint' do
+      assert_equal '/softCertActivation', subject.soft_cert_activation_endpoint
+    end
+
+    it 'overwrites the :soft_cert_activation_endpoint' do
+      subject.soft_cert_activation_endpoint = '/differentCertActivation'
+      assert_equal '/differentCertActivation', subject.soft_cert_activation_endpoint
+    end
+  end
+
 end
