@@ -1,9 +1,9 @@
 require 'minitest_helper'
 
-class Logix::VersionTest < MiniTest::Test
-
-  def test_version
-    assert_equal "0.0.1", Logix::VERSION
+describe Logix do
+  describe "VERSION" do
+    it 'returns the correct current version' do
+      assert_equal "0.0.1", Logix::VERSION
+    end
   end
-
 end

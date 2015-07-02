@@ -1,21 +1,20 @@
 require 'minitest_helper'
 
-class Logix::ClientTest < MiniTest::Test
+describe Logix::Client do
+
+  subject { Logix::Client.new }
 
   describe "#user_agent" do
-    def setup
-      @client = Logix::Client.new
-    end
-
-    def test_get_user_agent_default
-      assert_equal "Logix/#{Logix::VERSION}", @client.user_agent
-    end
-
-    def test_overwrite_user_agent
-      @client.user_agent = "CustomLogixClient/0.0.1"
-      assert_equal "CustomLogixClient/0.0.1", @client.user_agent
+    it 'defaults LogixRubyGem/version' do
+      assert_equal "Logix/#{Logix::VERSION}", subject.user_agent
     end
   end
 
+  describe "#user_agent=" do
+    it 'overwrites the User-Agent string' do
+      subject.user_agent = "CustomLogixClient/0.0.1"
+      assert_equal "CustomLogixClient/0.0.1", subject.user_agent
+    end
+  end
 
 end
