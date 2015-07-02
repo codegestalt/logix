@@ -3,14 +3,8 @@
 # Logix
 Ruby wrapper for the Crealogix E-Banking web "offline-tool" (API).
 
-# Quick start
-Install via Rubygems
-
+# Installation
 `gem install logix`
-
-... or add to your Gemfile
-
-`gem "logix"`
 
 ## Usage
 **Certificate & Private key:** To be able to connect to your bank you need a valid Certificate and Private Key (usually issued by your Bank / Crealogix).
