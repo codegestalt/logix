@@ -50,5 +50,18 @@ module Logix
       @soft_cert_activation_endpoint ||= '/softCertActivation'
     end
 
+    # Text representation of the client, masking passwords
+    #
+    # @return [String]
+    def inspect
+      inspected = super
+
+      # mask password
+      inspected = inspected.gsub! @password, "*******" if @password
+
+      inspected
+    end
+
+
   end
 end

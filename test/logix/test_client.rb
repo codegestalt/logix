@@ -37,6 +37,12 @@ describe Logix::Client do
       client = Logix::Client.new(password: 'y0l0', certificate: "./path/to/certificate.crt.pem")
       assert_equal false, client.credentials?
     end
+
+    it "masks passwords on inspect" do
+      client = Logix::Client.new(password: 'super secret')
+      inspected = client.inspect
+      refute_includes inspected, "super secret"
+    end
   end
 
   describe '#soft_cert_authentication_endpoint' do
