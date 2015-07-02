@@ -8,9 +8,7 @@ describe Logix::Client do
     it 'defaults LogixRubyGem/version' do
       assert_equal "Logix/#{Logix::VERSION}", subject.user_agent
     end
-  end
 
-  describe '#user_agent=' do
     it 'overwrites the User-Agent string' do
       subject.user_agent = "CustomLogixClient/0.0.1"
       assert_equal "CustomLogixClient/0.0.1", subject.user_agent
@@ -34,9 +32,21 @@ describe Logix::Client do
       client = Logix::Client.new(password: 'y0l0', certificate: "./path/to/certificate.crt.pem", private_key: "./path/to/private.key.pem")
       assert_equal true, client.credentials?
     end
+
     it 'returns false if any credentials are missing' do
       client = Logix::Client.new(password: 'y0l0', certificate: "./path/to/certificate.crt.pem")
       assert_equal false, client.credentials?
+    end
+  end
+
+  describe '#soft_cert_authentication_endpoint' do
+    it 'defaults the :soft_cert_authentication_endpoint' do
+      assert_equal '/softCertLogin', subject.soft_cert_authentication_endpoint
+    end
+
+    it 'overwrites the :soft_cert_authentication_endpoint' do
+      subject.soft_cert_authentication_endpoint = '/differentCertLogin'
+      assert_equal '/differentCertLogin', subject.soft_cert_authentication_endpoint
     end
   end
 
