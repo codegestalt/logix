@@ -17,4 +17,15 @@ describe Logix::Client do
     end
   end
 
+  describe "#credentials?" do
+    it 'returns true if all credentials are present' do
+      client = Logix::Client.new(password: 'y0l0', certificate: "./path/to/certificate.crt.pem", private_key: "./path/to/private.key.pem")
+      assert_equal true, client.credentials?
+    end
+    it 'returns false if any credentials are missing' do
+      client = Logix::Client.new(password: 'y0l0', certificate: "./path/to/certificate.crt.pem")
+      assert_equal false, client.credentials?
+    end
+  end
+
 end
