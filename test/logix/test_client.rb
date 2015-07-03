@@ -37,7 +37,9 @@ describe Logix::Client do
       client = Logix::Client.new(password: 'y0l0', certificate: "./path/to/certificate.crt.pem")
       assert_equal false, client.credentials?
     end
+  end
 
+  describe '#inspect' do
     it "masks passwords on inspect" do
       client = Logix::Client.new(password: 'super secret')
       inspected = client.inspect
@@ -64,6 +66,19 @@ describe Logix::Client do
     it 'overwrites the :soft_cert_activation_endpoint' do
       subject.soft_cert_activation_endpoint = '/differentCertActivation'
       assert_equal '/differentCertActivation', subject.soft_cert_activation_endpoint
+    end
+  end
+
+  describe '#login!' do
+    subject {  Logix::Client.new(password: 'y0l0', certificate: "./path/to/certificate.crt.pem", private_key: "./path/to/private.key.pem", endpoint: "tb.raiffeisendirect.ch") }
+
+    def setup
+    end
+
+    it 'returns true if the login succeeded' do
+      response = subject.login!
+      puts response
+      assert_equal true, response
     end
   end
 

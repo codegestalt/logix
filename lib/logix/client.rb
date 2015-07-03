@@ -1,9 +1,11 @@
 require 'logix/version'
+require 'faraday'
+
 module Logix
   class Client
 
     attr_accessor :password, :certificate, :private_key, :endpoint,
-                  :soft_cert_authentication_endpoint, :soft_cert_activation_endpoint
+                  :soft_cert_authentication_endpoint, :soft_cert_activation_endpoint, :connection
 
     attr_writer :user_agent
 
@@ -55,13 +57,27 @@ module Logix
     # @return [String]
     def inspect
       inspected = super
-
       # mask password
       inspected = inspected.gsub! @password, "*******" if @password
-
       inspected
     end
 
+    # @returns [Boolean]
+    def login!
+      @connection = setup_connection
+      @connection.params = {'lang' => 'en', 'password' => @password}
+      response = @connection.post("#{soft_cert_authentication_endpoint}/offlinetool/")
+    end
+
+    private
+
+    def setup_connection
+      Faraday::Connection.new "https://#{@endpoint}",
+        :ssl => {
+        :client_cert  => OpenSSL::X509::Certificate.new(File.read(@certificate)),
+        :client_key   => OpenSSL::PKey::RSA.new(File.read(@private_key))
+        }
+    end
 
   end
 end
