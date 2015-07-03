@@ -70,16 +70,14 @@ describe Logix::Client do
   end
 
   describe '#login!' do
+    # TODO: Provide test certificates
     subject {  Logix::Client.new(password: 'y0l0', certificate: "./path/to/certificate.crt.pem", private_key: "./path/to/private.key.pem", endpoint: "tb.raiffeisendirect.ch") }
 
     def setup
+      # TODO: Stub out external requests
+      # https://robots.thoughtbot.com/how-to-stub-external-services-in-tests
     end
 
-    it 'returns true if the login succeeded' do
-      response = subject.login!
-      puts response
-      assert_equal true, response
-    end
   end
 
 end
