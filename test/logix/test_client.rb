@@ -90,6 +90,11 @@ describe Logix::Client do
       it 'returns true login is successfull' do
         assert subject.login!
       end
+
+      it 'sets the last_response attriute' do
+        subject.login!
+        assert_kind_of Hash, subject.last_response
+      end
     end
 
   end

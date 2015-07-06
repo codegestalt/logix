@@ -7,7 +7,7 @@ module Logix
 
     attr_accessor :password, :certificate, :private_key, :endpoint,
                   :soft_cert_authentication_endpoint, :soft_cert_activation_endpoint, :connection,
-                  :session_cookie
+                  :session_cookie, :last_response
 
     attr_writer :user_agent
 
@@ -69,6 +69,7 @@ module Logix
       @connection.params = {'lang' => 'en', 'password' => @password}
       response = @connection.post("#{soft_cert_authentication_endpoint}/offlinetool/")
       body = Crack::XML.parse(response.body)
+      @last_response = body
       case
       when body["LOGIN_SOFT_CERT_RESPONSE"]["ErrorCode"].to_i == 0
         @session_cookie = response.headers["set-cookie"]
