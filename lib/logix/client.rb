@@ -63,16 +63,16 @@ module Logix
       inspected
     end
 
-    # @returns [Boolean]
+    # @returns true
     def login!
       @connection = setup_connection
       @connection.params = {'lang' => 'en', 'password' => @password}
       response = @connection.post("#{soft_cert_authentication_endpoint}/offlinetool/")
+      @last_response = response
       body = Crack::XML.parse(response.body)
-      @last_response = body
+      @session_cookie = response.headers["set-cookie"]
       case
       when body["LOGIN_SOFT_CERT_RESPONSE"]["ErrorCode"].to_i == 0
-        @session_cookie = response.headers["set-cookie"]
         true
       else
         false
