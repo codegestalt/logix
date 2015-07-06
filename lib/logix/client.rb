@@ -73,6 +73,7 @@ module Logix
       @session_cookie = response.headers["set-cookie"]
       case
       when body["LOGIN_SOFT_CERT_RESPONSE"]["ErrorCode"].to_i == 0
+        puts "Last Login: " + body["LOGIN_SOFT_CERT_RESPONSE"]["LastLogin"]
         true
       else
         false
