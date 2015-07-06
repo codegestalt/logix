@@ -73,17 +73,23 @@ describe Logix::Client do
     # TODO: Provide test certificates
     subject {  Logix::Client.new(password: 'y0l0', certificate: "test/fixtures/certificate.crt.pem", private_key: "test/fixtures/private.key.pem", endpoint: "tb.raiffeisendirect.ch") }
 
-    def setup
-      stub_request(:post, 'https://tb.raiffeisendirect.ch/softCertLogin/offlinetool/?lang=en&password=y0l0').
-        with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Length'=>'0', 'User-Agent'=>'Faraday v0.9.1'}).
-        to_return( :status => 200,
-                   :headers => {"set-cookie" => "RDI_SESS-S=AAABLtAPFyNkOTUwYTBkY2U2OWQ2MmM4ZmQ0YTJiNThlY2YxNGIyMgAATOU8_7f5FKQHmEfI0msWATyks8A=; path=/; secure; HttpOnly"},
-                   :body => File.read('test/fixtures/login_success.xml'))
-    end
+    describe 'successfull login' do
+      def setup
+        stub_request(:post, 'https://tb.raiffeisendirect.ch/softCertLogin/offlinetool/?lang=en&password=y0l0').
+          with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Length'=>'0', 'User-Agent'=>'Faraday v0.9.1'}).
+          to_return( :status => 200,
+                     :headers => {"set-cookie" => "RDI_SESS-S=AAABLtAPFyNkOTUwYTBkY2U2OWQ2MmM4ZmQ0YTJiNThlY2YxNGIyMgAATOU8_7f5FKQHmEfI0msWATyks8A=; path=/; secure; HttpOnly"},
+                     :body => File.read('test/fixtures/login_success.xml'))
+      end
 
-    it 'sets the session_cookie attribute' do
-      subject.login!
-      assert_includes subject.session_cookie, "RDI_SESS-S="
+      it 'sets the session_cookie attribute' do
+        subject.login!
+        assert_includes subject.session_cookie, "RDI_SESS-S="
+      end
+
+      it 'returns true login is successfull' do
+        assert subject.login!
+      end
     end
 
   end

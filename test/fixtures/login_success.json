@@ -1,0 +1,43 @@
+{
+              :method => :post,
+                :body => "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>\r\n<LOGIN_SOFT_CERT_RESPONSE>\r\n  <ErrorCode>0</ErrorCode>\r\n  <StatusMsg>Das Zertifikat Login war erfolgreich.</StatusMsg>\r\n  \r\n    <LastLogin>06.07.2015 20:31</LastLogin>\r\n  \r\n</LOGIN_SOFT_CERT_RESPONSE>",
+                 :url => #<URI::HTTPS https://tb.raiffeisendirect.ch/softCertLogin/offlinetool/?lang=en&password=sa0hee9Drur>,
+             :request => {
+        :params_encoder => nil,
+                 :proxy => nil,
+                  :bind => nil,
+               :timeout => nil,
+          :open_timeout => nil,
+              :boundary => nil,
+                 :oauth => nil
+    },
+     :request_headers => {
+            "User-Agent" => "Faraday v0.9.1",
+        "Content-Length" => "0"
+    },
+                 :ssl => {
+              :verify => true,
+             :ca_file => nil,
+             :ca_path => nil,
+         :verify_mode => nil,
+          :cert_store => nil,
+         :client_cert => #<OpenSSL::X509::Certificate: subject=#<OpenSSL::X509::Name:0x007ff9c499e538>, issuer=#<OpenSSL::X509::Name:0x007ff9c499e510>, serial=#<OpenSSL::BN:0x007ff9c499e4e8>, not_before=2014-02-25 14:25:28 UTC, not_after=2019-02-24 14:25:28 UTC>,
+          :client_key => #<OpenSSL::PKey::RSA:0x007ff9c5a02fa0>,
+         :certificate => nil,
+         :private_key => nil,
+        :verify_depth => nil,
+             :version => nil
+    },
+    :response_headers => {
+                     "date" => "Mon, 06 Jul 2015 18:32:39 GMT",
+                   "server" => "Apache",
+               "set-cookie" => "RDI_SESS-S=AAABLjtfEkw5NzBiMzhiNDc2NmExOTg2YjhjMThlOGJlOGY2YWFhYwAAE9FsgKtfcY0tiL4HylxsZjqtptA=; path=/; secure; HttpOnly",
+          "x-frame-options" => "SAMEORIGIN",
+            "frame-options" => "SAMEORIGIN",
+                     "vary" => "Accept-Encoding,User-Agent",
+               "connection" => "close",
+        "transfer-encoding" => "chunked",
+             "content-type" => "text/xml; charset=ISO-8859-1"
+    },
+              :status => 200
+}

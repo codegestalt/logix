@@ -1,5 +1,6 @@
 require 'logix/version'
 require 'faraday'
+require 'crack'
 
 module Logix
   class Client
@@ -54,7 +55,6 @@ module Logix
     end
 
     # Text representation of the client, masking passwords
-    #
     # @return [String]
     def inspect
       inspected = super
@@ -68,7 +68,14 @@ module Logix
       @connection = setup_connection
       @connection.params = {'lang' => 'en', 'password' => @password}
       response = @connection.post("#{soft_cert_authentication_endpoint}/offlinetool/")
-      @session_cookie = response.headers["set-cookie"]
+      body = Crack::XML.parse(response.body)
+      case
+      when body["LOGIN_SOFT_CERT_RESPONSE"]["ErrorCode"].to_i == 0
+        @session_cookie = response.headers["set-cookie"]
+        true
+      else
+        false
+      end
     end
 
     private
