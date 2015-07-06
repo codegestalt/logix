@@ -5,7 +5,8 @@ module Logix
   class Client
 
     attr_accessor :password, :certificate, :private_key, :endpoint,
-                  :soft_cert_authentication_endpoint, :soft_cert_activation_endpoint, :connection
+                  :soft_cert_authentication_endpoint, :soft_cert_activation_endpoint, :connection,
+                  :session_cookie
 
     attr_writer :user_agent
 
@@ -67,6 +68,7 @@ module Logix
       @connection = setup_connection
       @connection.params = {'lang' => 'en', 'password' => @password}
       response = @connection.post("#{soft_cert_authentication_endpoint}/offlinetool/")
+      @session_cookie = response.headers["set-cookie"]
     end
 
     private
@@ -78,6 +80,5 @@ module Logix
         :client_key   => OpenSSL::PKey::RSA.new(File.read(@private_key))
         }
     end
-
   end
 end
