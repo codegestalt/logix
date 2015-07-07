@@ -65,6 +65,14 @@ module Logix
       inspected
     end
 
+    # TODO: Implement
+    def sys_info
+    end
+
+    # TODO: Implement
+    def authenticate!
+    end
+
     # @returns true
     def login!
       @connection = setup_connection
@@ -109,20 +117,74 @@ module Logix
       end
 
       response = @connection.get("/root/datatransfer/mt940download")
+      @last_response = response
       raw_mt940 = Crack::XML.parse(response.body)["MT940_RESPONSE"]["EXPORT_DATA"]
       Cmxl.parse(raw_mt940, encoding: 'UTF-8')
     end
 
     # TODO: Implement
     def logout
+      puts 'not yet implemented!'
     end
 
     # TODO: Implement
     def session_status
+      puts 'not yet implemented!'
     end
 
     # TODO: Implement
     def login_time
+      puts 'not yet implemented!'
+    end
+
+    # TODO: Implement
+    def esr_download
+      puts 'not yet implemented!'
+    end
+
+    # TODO: Implement
+    def ipi_download
+      puts 'not yet implemented!'
+    end
+
+    # TODO: Implement
+    def lsv_download
+      puts 'not yet implemented!'
+    end
+
+    # TODO: Implement
+    def mt471_download
+      puts 'not yet implemented!'
+    end
+
+    # TODO: Implement
+    def mt536_download
+      puts 'not yet implemented!'
+    end
+
+    # TODO: Implement
+    def mt5xx_download
+      puts 'not yet implemented!'
+    end
+
+    # TODO: Implement
+    def dta_upload
+      puts 'not yet implemented!'
+    end
+
+    # TODO: Implement
+    def dta_status_request
+      puts 'not yet implemented!'
+    end
+
+    # TODO: Implement
+    def download_bank_document_categories
+      puts 'not yet implemented!'
+    end
+
+    # TODO: Implement
+    def download_bank_documents
+      puts 'not yet implemented!'
     end
 
     private

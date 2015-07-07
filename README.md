@@ -1,44 +1,67 @@
-**ATTENTION:** This gem is work in progress and not usable at the moment.
+**ATTENTION:** This gem is work in progress and not feature complete (yet)
 
 # Logix
 Ruby wrapper for the Crealogix E-Banking web "offline-tool" (API).
 
-# Installation
+## Installation
 `gem install logix`
 
 ## Usage
 **Certificate & Private key:** To be able to connect to your bank you need a valid Certificate and Private Key (usually issued by your Bank / Crealogix).
 You can either provide the path using the constructor or set the predefined environment variables `LOGIX_CERTIFICATE` and `LOGIX_PRIVATE_KEY`.
 
+First you create a new Logix::Client instance like follow:
+
 **Example:**
-`client = Logix::Client.new(password: 'y0l0', certificate: "./path/to/certificate.crt.pem", private_key: "./path/to/private.key.pem")`
+`client = Logix::Client.new(password: 'y0l0', certificate: "./path/to/certificate.crt.pem", private_key: "./path/to/private.key.pem", endpoint: "my.bank.ch")`
+
+**TODO:** Show example for additional options like `soft_cert_authentication_endpoint` here.
+
+After creating the client you can log-in like this.
 
 **Login:**
 `client.login!`
 
-### First time login and Certificate activation
-If this is your first time using the certificate to login in you need to activate it first. After the activation you need to change the password on your first login.
-This can be done with following two steps.
+If the login is successfull it will return true. Otherwise the method will return false.
+To see the specific error codes you can use the `client.last_response` method.
 
-`client.activate!(code_a: "aaa", code_b: "bbb")`
 
-after the certificate has been verified you need to login for the first while also setting a new password:
+**Getting the last response**
+This will return the last HTTP response as a Faraday Hash object.
 
-`client.login!(password: "initialpassword", new_password: "new_password")`
+`client.last_response`
 
-**NOTE:** If the `new_password` option is defined it will ALWAYS overrite the current password. This is handy should you want to change your password in the future.
+**MT940 Download**
+`client.mt940_download(data_type: newMT940)`
 
-### Environment Variables
-Instead of providing all attributes to the constructor you can also set following environment variables instead:
+Returns the latest unprocessesd MT940 Files.
 
-- `LOGIX_FQDN` the fully qualified domain name of your bank. Example: `"something.bankname.ch"`
-- `LOGIX_PASSWORD` your login password.
-- `LOGIX_CERTIFICATE` path to the certificate file.
-- `LOGIX_PRIVATE_KEY` path to the private key file.
+`client.mt940_download(data_type: oldMT940)`
 
-## Bank specific settings
-Various endpoints to the API can differ from Bank to Bank. These are what I think are "defaults" used by Crealogix.
-You can always change them using the constructor.
+Returns all MT940 Files that have already been processed.
 
-- `soft_cert_authentication_endpoint` the endpoint where the login happens. Default value: `/softCertLogin`
-- `soft_cert_activation_endpoint` the endpoint that is used for the initial certificate verification (only happens once). Default value: `/softCertActivation`
+
+##Still in work
+
+Following API methods are complete:
+
+- `client.login!`
+- `client.mt940_download!`
+
+Following API methods are not yet implemented:
+
+- `client.sys_info`
+- `client.authenticate!`
+- `client.logout`
+- `client.session_status`
+- `client.login_time`
+- `client.esr_download`
+- `client.ipi_download`
+- `client.lsv_download`
+- `client.mt471_download`
+- `client.mt536_download`
+- `client.mt5xx_download`
+- `client.dta_upload`
+- `client.dta_status_request`
+- `client.download_bank_document_categories`
+- `client.download_bank_documents`
