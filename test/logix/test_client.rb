@@ -70,7 +70,6 @@ describe Logix::Client do
   end
 
   describe '#login!' do
-    # TODO: Provide test certificates
     subject {  Logix::Client.new(password: 'y0l0', certificate: "test/fixtures/certificate.crt.pem", private_key: "test/fixtures/private.key.pem", endpoint: "tb.raiffeisendirect.ch") }
 
     describe 'successfull' do
@@ -80,11 +79,6 @@ describe Logix::Client do
           to_return( :status => 200,
                      :headers => {"set-cookie" => "RDI_SESS-S=AAABLtAPFyNkOTUwYTBkY2U2OWQ2MmM4ZmQ0YTJiNThlY2YxNGIyMgAATOU8_7f5FKQHmEfI0msWATyks8A=; path=/; secure; HttpOnly"},
                      :body => File.read('test/fixtures/login_success.xml'))
-      end
-
-      it 'sets the session_cookie attribute' do
-        subject.login!
-        assert_includes subject.session_cookie, "RDI_SESS-S="
       end
 
       it 'returns true' do
@@ -110,7 +104,22 @@ describe Logix::Client do
         refute subject.login!
       end
     end
+  end
 
+  # TODO Write tests
+  describe "#logout" do
+  end
+
+  # TODO Write tests
+  describe "#session_status" do
+  end
+
+  # TODO Write tests
+  describe "#login_time" do
+  end
+
+  # TODO Write tests
+  describe "#mt940_download" do
   end
 
 end

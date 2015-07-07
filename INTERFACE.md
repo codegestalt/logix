@@ -158,3 +158,12 @@ Method: `GET`
 
 **Parameters**
 `page`  values: `main` (default) With the parameter value "main" the main entry page is returned as if the user logged in online. `dtaoverview` The parameter value "dtaoverview" returns the page "Overview of datatransfers". If parameter is omitted, "main" is taken as the default.
+
+
+
+### MT940-Download
+#### Request
+URL: `https://<fqdn><clientpath>/root/datatransfer/mt940download?MT940AccountNumber=all&MT940Dat aType=newMT940&Download=Abholen&output=xml`
+Method: `GET`
+
+**Parameters**

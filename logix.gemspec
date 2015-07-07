@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "cmxl", "~> 0.1.1"
-  spec.add_dependency "oga", "~> 1.0.3"
   spec.add_dependency "faraday", "~> 0.9.1"
+  spec.add_dependency "faraday-cookie_jar", "~> 0.0.6"
   spec.add_dependency "crack", "~> 0.4.2"
 end
