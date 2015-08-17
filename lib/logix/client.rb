@@ -191,7 +191,7 @@ module Logix
 
     def setup_connection
       connection = Faraday::Connection.new("https://#{@endpoint}",
-          :ssl => {:client_cert  => OpenSSL::X509::Certificate.new(File.read(@certificate)), :client_key   => OpenSSL::PKey::RSA.new(File.read(@private_key))
+          :ssl => {:client_cert  => OpenSSL::X509::Certificate.new(@certificate), :client_key   => OpenSSL::PKey::RSA.new(@private_key)
         }) do |builder|
           builder.use :cookie_jar
           builder.adapter Faraday.default_adapter
