@@ -6,6 +6,7 @@ group :development do
   gem 'awesome_print'
   gem 'hirb-unicode'
   gem 'bundler', '~> 1.9'
+  gem 'pry'
 end
 
 group :test do

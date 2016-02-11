@@ -93,41 +93,44 @@ module Logix
     #           Required:
     #           :account_number  - value: All
     #           :data_type  - values:
-    #             allMT940: (default)
+    #             allMT940: (default) // NOTE: Does not work with the date params
     #             newMT940: (only not yet downloaded data)
     #             oldMT940: (only already downloaded data)
     #           Optional:
-    #           :start_date - Booking date range (mandatory if data_type = allMT940)
-    #           :end_date - Booking date range (mandatory if data_type = allMT940)
+    #           :start_date - Booking date range (mandatory if data_type = oldMT940)
+    #           :end_date - Booking date range (mandatory if data_type = oldMT940)
     #
-    # Returns a cmxl MT940 Data file
+    # Returns a cmxl MT940 Object, or nil if there is no data
     def mt940_download(options = {})
-      account_number = options[:account_number] || 'All'
+      account_number = options[:account_number] || 'all'
       data_type = options[:data_type] || 'allMT940'
-      start_date = options[:start_date].strftime("%d.%m.%Y")
-      end_date = options[:start_date].strftime("%d.%m.%Y")
-      download = "Download"
-      output = "Xml"
-      if start_date && end_date
-        @connection.params = {'lang' => 'en',
-                              'MT940AccountNumber' => account_number,
-                              'MT940DataType' => data_type,
-                              'StartDate' => start_date,
-                              'EndDate' => end_date,
-                              'Download' => download,
-                              'output' => output}
-      else
-        @connection.params = {'lang' => 'en',
-                              'MT940AccountNumber' => account_number,
-                              'MT940DataType' => data_type,
-                              'Download' => download,
-                              'output' => output}
+      download = "Abholen"
+      output = "xml"
+
+      @connection.params = {'lang' => 'en',
+                            'MT940AccountNumber' => account_number,
+                            'MT940DataType' => data_type,
+                            'Download' => download,
+                            'output' => output}
+
+      if options[:start_date] && options[:end_date] && data_type == 'oldMT940'
+        @connection.params = @connection.params.merge({'StartDate' => options[:start_date].strftime("%d.%m.%Y"),
+                                                       'EndDate' => options[:end_date].strftime("%d.%m.%Y")})
       end
 
       response = @connection.get("/root/datatransfer/mt940download")
       @last_response = response
-      raw_mt940 = Crack::XML.parse(response.body)["MT940_RESPONSE"]["EXPORT_DATA"]
-      Cmxl.parse(raw_mt940, encoding: 'UTF-8')
+
+      body = Crack::XML.parse(response.body)
+      case
+      when body["MT940_RESPONSE"]["ErrorCode"].to_i == 0
+        raw_mt940 = Crack::XML.parse(response.body)["MT940_RESPONSE"]["EXPORT_DATA"]
+        return Cmxl.parse(raw_mt940, encoding: 'UTF-8').first
+      when body["MT940_RESPONSE"]["ErrorCode"].to_i == 5000
+        nil
+      else
+        raise "Unkown error"
+      end
     end
 
     # TODO: Implement
