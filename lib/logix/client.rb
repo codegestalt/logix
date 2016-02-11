@@ -104,16 +104,24 @@ module Logix
     def mt940_download(options = {})
       account_number = options[:account_number] || 'All'
       data_type = options[:data_type] || 'allMT940'
+      start_date = options[:start_date].strftime("%d.%m.%Y")
+      end_date = options[:start_date].strftime("%d.%m.%Y")
       download = "Download"
       output = "Xml"
-      @connection.params = {'lang' => 'en',
-                            'MT940AccountNumber' => account_number,
-                            'MT940DataType' => data_type,
-                            'Download' => download,
-                            'output' => output}
-      if options[:start_date] && options[:end_date]
-        @connection.params = @connection.params.merge({'StartDate' => options[:start_date],
-                                                       'EndDate' => options[:end_date]})
+      if start_date && end_date
+        @connection.params = {'lang' => 'en',
+                              'MT940AccountNumber' => account_number,
+                              'MT940DataType' => data_type,
+                              'StartDate' => start_date,
+                              'EndDate' => end_date,
+                              'Download' => download,
+                              'output' => output}
+      else
+        @connection.params = {'lang' => 'en',
+                              'MT940AccountNumber' => account_number,
+                              'MT940DataType' => data_type,
+                              'Download' => download,
+                              'output' => output}
       end
 
       response = @connection.get("/root/datatransfer/mt940download")
