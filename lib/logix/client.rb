@@ -76,9 +76,14 @@ module Logix
     # @returns true
     def login!
       @connection = setup_connection
-      @connection.params = {'lang' => 'en', 'password' => @password}
-      response = @connection.post("#{soft_cert_authentication_endpoint}/offlinetool/")
+      response = @connection.post do |req|
+        req.url "#{soft_cert_authentication_endpoint}/offlinetool/"
+        req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        req.body = "lang=de&password=#{@password}"
+      end
+
       @last_response = response
+
       body = Crack::XML.parse(response.body)
       case
       when body["LOGIN_SOFT_CERT_RESPONSE"]["ErrorCode"].to_i == 0
