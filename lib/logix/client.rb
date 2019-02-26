@@ -3,6 +3,7 @@ require 'logix/raiffeisen_field_parser'
 require 'faraday'
 require 'faraday-cookie_jar'
 require 'crack'
+require 'openssl'
 
 module Logix
   class Client
@@ -11,8 +12,8 @@ module Logix
                   :soft_cert_authentication_endpoint, :soft_cert_activation_endpoint, :connection,
                   :last_response
 
-    attr_writer :user_agent
 
+    attr_writer :user_agent
     # Public: Initialize new Client.
     # options - The Hash options used to refine the selection (default: {}):
     #           Required:
@@ -70,7 +71,13 @@ module Logix
     end
 
     # TODO: Implement
-    def authenticate!
+    def activate!(codeA: nil, codeB: nil)
+      @connection = setup_connection
+      response = @connection.post do |req|
+        req.url "#{soft_cert_activation_endpoint}/offlinetool/"
+        req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        req.body = "lang=de&codeA=#{codeA}&codeB=#{codeB}"
+      end
     end
 
     # @returns true

@@ -40,7 +40,7 @@ Method: `POST`
 `bank` is optional.
 
 ####Response
-```
+```xml
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <ACTIVATION_SOFT_CERT_RESPONSE>
   <ErrorCode>num</ErrorCode>
@@ -158,8 +158,6 @@ Method: `GET`
 
 **Parameters**
 `page`  values: `main` (default) With the parameter value "main" the main entry page is returned as if the user logged in online. `dtaoverview` The parameter value "dtaoverview" returns the page "Overview of datatransfers". If parameter is omitted, "main" is taken as the default.
-
-
 
 ### MT940-Download
 #### Request

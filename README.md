@@ -13,9 +13,14 @@ First you create a new `Logix::Client` instance like follow:
 
 **Example:**
 
-`client = Logix::Client.new(password: 'y0l0', certificate: "./path/to/certificate.crt.pem", private_key: "./path/to/private.key.pem", endpoint: "my.bank.ch")`
+`client = Logix::Client.new(password: 'y0l0', certificate: "CERTIFICATE CONTENT HERE", private_key: "KEY CONTENT hERE", endpoint: "tb.raiffeisendirect.ch")`
 
 *TODO: Show example for additional options like `soft_cert_authentication_endpoint` here.*
+
+**Certificate Activation**
+If the certificate expires it has to be renewed once using following command:
+
+`client.activate!(codeA: 'XXX', codeB: 'xxx')`
 
 After creating the client you can log-in like this.
 
