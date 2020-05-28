@@ -5,7 +5,7 @@ gem 'rake'
 group :development do
   gem 'awesome_print'
   gem 'hirb-unicode'
-  gem 'bundler', '~> 1.9'
+  gem 'bundler', '~> 2'
   gem 'pry'
 end
 
